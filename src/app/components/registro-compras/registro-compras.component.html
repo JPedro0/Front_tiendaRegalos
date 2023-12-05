@@ -1,3 +1,16 @@
 <app-navbar />
-<p>registro-compras works!</p>
+<h2>Registrar Compra</h2>
+<form class="mb-3 module" [formGroup]="formVenta">
+    <label for="FormControlInput" class="form-label texto">Producto:</label>
+    <input type="text" class="form-control" id="FormControlInput1" formControlName="producto">
+    <label for="FormControlInput" class="form-label texto">Cantidad:</label>
+    <input type="text" class="form-control" id="FormControlInput2" placeholder="0" formControlName="cantidad">
+    <br />
+    <button type="submit" (click)="agregar()" [disabled]="formVenta.invalid">Agregar</button> 
+</form>
+<div>
+
+</div>
+<p>Total: $total</p>
+<button type="submit" (click)="realizarVenta()">Finalizar Venta</button>
 <app-bottombar></app-bottombar>
