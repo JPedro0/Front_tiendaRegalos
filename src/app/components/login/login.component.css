@@ -1,0 +1,23 @@
+input{
+    width: 100%;
+    text-align: center;
+    background-color: #e0dcdc;
+}
+
+.inicio {
+    border: 1;
+    border-color: rgb(42, 132, 24);
+    background-color: rgb(42, 132, 24);
+    font-size: 20px;
+    font-weight: bold;
+    outline: 0;
+}
+
+.inicio:hover {
+    border-color: rgb(31, 94, 18);
+    background-color: rgb(31, 94, 18);
+}
+
+.texto{
+    font-weight: bold;
+}

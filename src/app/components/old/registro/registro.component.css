@@ -1,0 +1,15 @@
+button {
+    border: 1;
+    border-color: brown;
+    background-color: brown;
+    font-weight: bold;
+    outline: 0;
+}
+
+.espacio{
+    padding-top: 3em;
+}
+
+input{
+    background-color: #e0dcdc;
+}

@@ -1,0 +1,19 @@
+button {
+    border: 1;
+    border-color: rgb(42, 132, 24);
+    background-color: rgb(42, 132, 24);
+    font-weight: bold;
+    outline: 0;
+}
+
+button:hover {
+    border-color: rgb(31, 94, 18);
+    background-color: rgb(31, 94, 18);
+}
+
+div{
+    flex: auto;
+    text-align: center;
+    align-items: center;
+    padding-top: 2rem;
+}
