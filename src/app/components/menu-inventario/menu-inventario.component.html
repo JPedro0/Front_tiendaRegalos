@@ -1,3 +1,59 @@
 <app-navbar />
-<p>menu-inventario works!</p>
+<h2>Inventario.</h2>
+<div class="mat-elevation-z0 espacio module">
+    <mat-form-field class="mat-form-field">
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input autocomplete="off">
+    </mat-form-field>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="ID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.Nombre}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Descripcion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
+            <td mat-cell *matCellDef="let element"> {{element.Descripcion}} </td>
+        </ng-container>
+        <ng-container matColumnDef="CantidadActual">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad Activa </th>
+            <td mat-cell *matCellDef="let element"> {{element.CantidadActual}} </td>
+        </ng-container>
+        <ng-container matColumnDef="FechaAdquision">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Adquisicion </th>
+            <td mat-cell *matCellDef="let element"> {{element.FechaAdquision}} </td>
+        </ng-container>
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon class="material-icons iconos" matTooltip="Eliminar" (click)="eliminar(element.ID)">delete</mat-icon>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+</div>
+<div>
+
+</div>
+<div>
+    <form class="mb-3 module" [formGroup]="formInventario">
+        <label for="FormControlInput" class="form-label texto">Objeto:</label>
+        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" formControlName="objeto">
+        <label for="FormControlInput" class="form-label texto">Descripcion:</label>
+        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" placeholder="" formControlName="descripcion">
+        <label for="FormControlInput" class="form-label texto">Cantidad:</label>
+        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" placeholder="" formControlName="cantidad">
+        <label for="FormControlInput" class="form-label texto">Fecha de Registro:</label>
+        <input type="date" class="form-control" id="FormControlInventario" autocomplete="off" placeholder="" formControlName="fechaRegistro">
+        <br />
+        <button type="submit" (click)="altaInventario()" [disabled]="formInventario.invalid">Añadir</button> 
+    </form>
+</div>
 <app-bottombar></app-bottombar>

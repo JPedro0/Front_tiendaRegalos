@@ -1,3 +1,3 @@
 export var Global = {
-    urlBackend: "https://localhost:3000"
+    urlBackend: "http://localhost:3000/"
 };

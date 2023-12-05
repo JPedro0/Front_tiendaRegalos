@@ -11,6 +11,7 @@ import { MatTableModule } from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatRadioModule} from '@angular/material/radio';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [],
@@ -26,6 +27,7 @@ import {MatRadioModule} from '@angular/material/radio';
     MatSnackBarModule,
     ReactiveFormsModule,
     MatRadioModule,
+    HttpClientModule,
   ],
   exports: [
     MatTableModule,

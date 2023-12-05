@@ -19,6 +19,7 @@ import { MenuInventarioComponent } from './components/menu-inventario/menu-inven
 import { MenuPromocionesComponent } from './components/menu-promociones/menu-promociones.component';
 import { RegistroComprasComponent } from './components/registro-compras/registro-compras.component';
 import { MenuComprasComponent } from './components/menu-compras/menu-compras.component';
+import { InventarioService } from './service/inventario.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { MenuComprasComponent } from './components/menu-compras/menu-compras.com
     NoopAnimationsModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [InventarioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
