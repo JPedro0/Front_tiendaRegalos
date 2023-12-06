@@ -45,8 +45,9 @@ export class PromocionesService {
             });
     }
 
-    async editPromocion(tipo: boolean, descuento: number): Promise<any> {
+    async editPromocion(codigo: number, tipo: boolean, descuento: number): Promise<any> {
         await axios.put(this.APIUrl + 'actualizar', {
+            Codigo: codigo,
             nuevoTipoDescuento: tipo,
             nuevoDescuento: descuento
         })

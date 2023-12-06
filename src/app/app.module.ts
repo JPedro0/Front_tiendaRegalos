@@ -18,9 +18,10 @@ import { MenuInventarioComponent } from './components/menu-inventario/menu-inven
 import { MenuPromocionesComponent } from './components/menu-promociones/menu-promociones.component';
 import { RegistroComprasComponent } from './components/registro-compras/registro-compras.component';
 import { MenuComprasComponent } from './components/menu-compras/menu-compras.component';
-import { InventarioService } from './service/inventario.service';
-import { Axios } from 'axios';
 import { MenuProductosComponent } from './components/menu-productos/menu-productos.component';
+import { registerLocaleData } from '@angular/common';
+import localeES from "@angular/common/locales/es";
+registerLocaleData(localeES, "es");
 
 @NgModule({
   declarations: [

@@ -1,10 +1,6 @@
-import axios, { Axios } from 'axios';
-import { HeaderComponent } from './../components/header/header.component';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import axios from 'axios';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Global } from './global.service';
-import { Inventario } from '../interface/inventario';
 
 @Injectable({
     providedIn: 'root'
@@ -13,11 +9,14 @@ export class InventarioService {
 
     readonly APIUrl = Global.urlBackend + 'inventario/';
 
-    constructor(private http: HttpClient) { }
-
-    //SP de obtener todos los usuarios
-    listaInventario(): Observable<any[]> {
-        return this.http.get<any>(this.APIUrl + 'lista');
+    async listaProductos(): Promise<any> {
+        return await axios.get(this.APIUrl + 'lista', {})
+            .then((respuesta) => {
+                return respuesta.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     async altaInventario(nombre: string, descripcion: string, cantidad: number): Promise<any> {

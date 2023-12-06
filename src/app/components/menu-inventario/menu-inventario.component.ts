@@ -6,11 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { InventarioService } from 'src/app/service/inventario.service';
-import { DatePipe, formatDate } from '@angular/common';
 
-let Lista_Objetos: Inventario[] = [
-
-];
+let Lista_Objetos: Inventario[] = [];
 
 @Component({
   selector: 'app-menu-inventario',
@@ -58,43 +55,22 @@ export class MenuInventarioComponent {
     this.refrescar();
   }
 
-  async eliminar(id: number) {
-    try {
-      let respuesta = await this.service.bajaInventario( id )
-
-      console.log(respuesta);
-
-      //Notificacion de producto Eliminado
-      this._snackBar.open('El producto ' + id + ' a sido eliminado', 'Okay', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      });
-
-      //Refrescar tabla
-      this.refrescar();
-
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   //Refrescar informacion tabla y paginacion
-  refrescar() {
-    this.service.listaInventario().subscribe((data: Inventario[]) => {
-      Lista_Objetos = data;
+  async refrescar() {
+    try {
+      Lista_Objetos = await this.service.listaProductos();
       this.dataSource = new MatTableDataSource<Inventario>(Lista_Objetos);
       this.ngAfterViewInit();
       this.objetos = Lista_Objetos;
-    })
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
   async altaInventario() {
@@ -150,6 +126,28 @@ export class MenuInventarioComponent {
       catch (e) {
         console.log(e);
       }
+    }
+  }
+
+  async eliminar(id: number) {
+    try {
+      let respuesta = await this.service.bajaInventario( id )
+
+      console.log(respuesta);
+
+      //Notificacion de producto Eliminado
+      this._snackBar.open('El producto ' + id + ' a sido eliminado', 'Okay', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
+
+      //Refrescar tabla
+      this.refrescar();
+
+    }
+    catch (e) {
+      console.log(e);
     }
   }
 

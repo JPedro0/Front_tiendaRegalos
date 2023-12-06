@@ -63,9 +63,7 @@ export class MenuProductosComponent {
   }
 
   async obtenerInventario(){
-    this.invService.listaInventario().subscribe(data => {
-      this.Lista_Objetos = data;
-    })
+    this.Lista_Objetos = await this.invService.listaProductos();
   }
 
   //Refrescar informacion tabla y paginacion

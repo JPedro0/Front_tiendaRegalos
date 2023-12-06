@@ -4,8 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Inventario } from 'src/app/interface/inventario';
 import { Producto } from 'src/app/interface/producto';
 import { Promocion } from 'src/app/interface/promocion';
+import { InventarioService } from 'src/app/service/inventario.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { PromocionesService } from 'src/app/service/promo.service';
 
@@ -33,7 +35,7 @@ export class MenuPromocionesComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit(): void {
-    this.paginator._intl.itemsPerPageLabel = "Productos por pagina";
+    this.paginator._intl.itemsPerPageLabel = "Promociones por pagina";
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -42,7 +44,6 @@ export class MenuPromocionesComponent {
     private _snackBar: MatSnackBar,
     private service: PromocionesService,
     private proService: ProductoService,
-    private changeDetectorRefs: ChangeDetectorRef,
     private formBuilder: FormBuilder) {
 
     this.formPromocion = this.formBuilder.group({
@@ -102,7 +103,6 @@ export class MenuPromocionesComponent {
   }
 
   async altaPromocion() {
-    console.log(this.formPromocion.value.productoCodigo)
     const promo: Promocion = {
       ID: this.formPromocion.value.id,
       TipoDescuento: this.formPromocion.value.tipoDescuento,
@@ -136,6 +136,7 @@ export class MenuPromocionesComponent {
     else{
       try {
         let respuesta = await this.service.editPromocion(
+          promo.ID,
           promo.TipoDescuento,
           promo.Descuento,
         )
