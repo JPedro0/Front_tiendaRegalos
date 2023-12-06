@@ -1,6 +1,6 @@
 export interface Inventario {
-    ID?: number;
+    ID: number;
     Nombre: string;
     Descripcion: string;
-    CantidadActual: string;
+    CantidadActual: number;
 }

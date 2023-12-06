@@ -1,5 +1,5 @@
 export interface Producto {
-    Codigo?: number;
+    Codigo: number;
     Precio: number;
-    InventarioID?: number;
+    InventarioID: number;
 }

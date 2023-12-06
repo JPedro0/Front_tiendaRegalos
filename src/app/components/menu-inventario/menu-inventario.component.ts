@@ -108,20 +108,48 @@ export class MenuInventarioComponent {
     if(producto.ID == 9999){
       try {
         let respuesta = await this.service.altaInventario(
-          this.formInventario.value.objeto,
-          this.formInventario.value.descripcion,
-          this.formInventario.value.cantidad
+          producto.Nombre,
+          producto.Descripcion,
+          producto.CantidadActual
         )
   
         this.refrescar();
+
+        this._snackBar.open('El producto ' + producto.Nombre + ' a sido dado de alta.', 'Okay', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+
         this.formInventario.reset();
+        this.formInventario.controls['id'].setValue(0);
       }
       catch (e) {
         console.log(e);
       }
     }
     else{
-      console.log("editar");
+      try {
+        let respuesta = await this.service.editInventario(
+          producto.ID,
+          producto.Nombre,
+          producto.Descripcion,
+          producto.CantidadActual
+        )
+  
+        this.refrescar();
+
+        this._snackBar.open('El producto ' + producto.Nombre + ' a sido modificado.', 'Okay', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+
+        this.formInventario.reset();
+      }
+      catch (e) {
+        console.log(e);
+      }
     }
   }
 

@@ -1,3 +1,74 @@
 <app-navbar />
-<p>menu-promociones works!</p>
+<h2>Promociones.</h2>
+<div class="mat-elevation-z0 espacio module">
+    <mat-form-field class="mat-form-field">
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input autocomplete="off">
+    </mat-form-field>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tipo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de Descuento </th>
+            <td mat-cell *matCellDef="let element"> {{element.TipoDescuento}} </td>
+        </ng-container>
+        <ng-container matColumnDef="descuento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descuento </th>
+            <td mat-cell *matCellDef="let element"> {{element.Descuento}} </td>
+        </ng-container>
+        <ng-container matColumnDef="productoCodigo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo del Producto </th>
+            <td mat-cell *matCellDef="let element"> {{element.ProductoCodigo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon class="material-icons iconos" matTooltip="Eliminar" (click)="eliminar(element.ID)">delete</mat-icon>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+</div>
+<div>
+    <h3>Administracion de inventario</h3>
+    <form [formGroup]="formPromocion">
+        <label for="FormControlInput" class="form-label">Promociones:</label>
+        <div class="input-group mb-3">
+            <select formControlName="id" [(ngModel)]="seleccion" class="form-select" (change)="setName()" [value]='0'>
+                <option disabled value="0">Seleccione una opcion</option>
+                <option value="9999"><b>Dar de alta un producto</b></option>
+                <option *ngFor="let item of objetos" [ngValue]="item.ID">
+                    {{ item.ID }}
+                </option>
+            </select>
+            &nbsp;
+        </div>
+        <label for="FormControlInput" class="form-label texto">Tipo de descuento:</label>
+        <select formControlName="tipoDescuento" class="form-select" [value]='0' [(ngModel)]="seleccion3">
+            <option disabled value="-1">Seleccione un producto</option>
+            <option value="0">Monetario</option>
+            <option value="1">Porcentaje</option>
+        </select>        
+        <label for="FormControlInput" class="form-label texto">Descuento a aplicar:</label>
+        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" placeholder="" formControlName="descuento">
+        <label for="FormControlInput" class="form-label texto">ID del Producto:</label>
+        <div class="input-group mb-3">
+            <select formControlName="productoCodigo" [(ngModel)]="seleccion2" class="form-select" [value]='0'>
+                <option disabled value="0">Seleccione un producto</option>
+                <option *ngFor="let item of Lista_Producto" [ngValue]="item.Codigo">
+                    {{ item.Codigo }}
+                </option>
+            </select>
+            &nbsp;
+        </div>        
+        <br />
+        <button type="submit" (click)="altaPromocion()" [disabled]="formPromocion.invalid">Añadir</button> 
+    </form>
+</div>
 <app-bottombar></app-bottombar>

@@ -21,14 +21,13 @@ export class InventarioService {
     }
 
     async altaInventario(nombre: string, descripcion: string, cantidad: number): Promise<any> {
-
         await axios.post(this.APIUrl + 'nuevo', {
             Nombre: nombre,
             Descripcion: descripcion,
             CantidadActual: cantidad
         })
             .then((respuesta) => {
-                console.log(respuesta.data);
+                console.log(respuesta);
             })
             .catch((error) => {
                 console.log(error);
@@ -36,12 +35,11 @@ export class InventarioService {
     }
 
     async bajaInventario(id: number): Promise<any> {
-
         await axios.delete(this.APIUrl + 'eliminar', {
             data: { invID: id }
         })
             .then((respuesta) => {
-                console.log(respuesta.data);
+                console.log(respuesta);
             })
             .catch((error) => {
                 console.log(error);
@@ -49,12 +47,24 @@ export class InventarioService {
     }
 
     async editInventario(id:number, nombre: string, descripcion: string, cantidad: number): Promise<any> {
-
         await axios.put(this.APIUrl + 'actualizar', {
             invID: id,
             nuevoNombre: nombre,
             nuevaDescripcion: descripcion,
-            CantidadActual: cantidad
+            nuevaCantidadActual: cantidad
+        })
+            .then((respuesta) => {
+                console.log(respuesta);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    async genCargo(id:number, cantidad: number): Promise<any> {
+        await axios.post(this.APIUrl + 'cargo', {
+            invID: id,
+            cantidadVendida: cantidad
         })
             .then((respuesta) => {
                 console.log(respuesta.data);
@@ -64,10 +74,10 @@ export class InventarioService {
             });
     }
 
-    async editCantidad(cantidad: number): Promise<any> {
-
-        await axios.post(this.APIUrl + 'salida', {
-            cantidadVendida: cantidad
+    async genAbono(id:number, cantidad: number): Promise<any> {
+        await axios.post(this.APIUrl + 'abono', {
+            invID: id,
+            cantidadComprada: cantidad
         })
             .then((respuesta) => {
                 console.log(respuesta.data);
