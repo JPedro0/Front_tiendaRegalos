@@ -21,9 +21,12 @@ let Lista_Objetos: Inventario[] = [
 
 export class MenuInventarioComponent {
 
+  objetos: Inventario[] = [];
+  seleccion: number = 0;
+
   formInventario: FormGroup;
 
-  displayedColumns: string[] = ['ID', 'Nombre', 'Descripcion', 'CantidadActual', 'FechaAdquision', 'acciones'];
+  displayedColumns: string[] = ['ID', 'Nombre', 'Descripcion', 'CantidadActual', 'acciones'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource<Inventario>(Lista_Objetos);
 
@@ -43,10 +46,10 @@ export class MenuInventarioComponent {
     private formBuilder: FormBuilder) {
 
     this.formInventario = this.formBuilder.group({
+      id: ['', [Validators.required]],
       objeto: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
-      cantidad: ['', [Validators.required]],
-      fechaRegistro: ['', [Validators.required]],
+      cantidad: ['', [Validators.required, Validators.pattern('[0-9]*')]],
     });
 
   }
@@ -55,10 +58,11 @@ export class MenuInventarioComponent {
     this.refrescar();
   }
 
-  eliminar(id: number) {
-    this.service.bajaInventario(id).subscribe(data => {
+  async eliminar(id: number) {
+    try {
+      let respuesta = await this.service.bajaInventario( id )
 
-      console.log(data);
+      console.log(respuesta);
 
       //Notificacion de producto Eliminado
       this._snackBar.open('El producto ' + id + ' a sido eliminado', 'Okay', {
@@ -69,7 +73,11 @@ export class MenuInventarioComponent {
 
       //Refrescar tabla
       this.refrescar();
-    })
+
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
 
@@ -85,25 +93,54 @@ export class MenuInventarioComponent {
       Lista_Objetos = data;
       this.dataSource = new MatTableDataSource<Inventario>(Lista_Objetos);
       this.ngAfterViewInit();
+      this.objetos = Lista_Objetos;
     })
   }
 
-  altaInventario(){
+  async altaInventario() {
     const producto: Inventario = {
+      ID: this.formInventario.value.id,
       Nombre: this.formInventario.value.objeto,
       Descripcion: this.formInventario.value.descripcion,
-      CantidadActual: this.formInventario.value.cantidad,
-      FechaAdquision: this.formInventario.value.fechaRegistro
+      CantidadActual: this.formInventario.value.cantidad
     }
 
-    this.service.altaInventario(
-      this.formInventario.value.objeto,
-      this.formInventario.value.descripcion,
-      this.formInventario.value.cantidad,
-      this.formInventario.value.fechaRegistro
-    ).subscribe(data => {
-      console.log(data);
-    })
+    if(producto.ID == 9999){
+      try {
+        let respuesta = await this.service.altaInventario(
+          this.formInventario.value.objeto,
+          this.formInventario.value.descripcion,
+          this.formInventario.value.cantidad
+        )
+  
+        this.refrescar();
+        this.formInventario.reset();
+      }
+      catch (e) {
+        console.log(e);
+      }
+    }
+    else{
+      console.log("editar");
+    }
   }
 
+  setName(){
+    //console.log(this.objetos[1])
+    if(this.formInventario.value.id > 0 && this.formInventario.value.id != 9999){
+      for (let index = 0; index < this.objetos.length; index++) {    
+        if(this.formInventario.value.id == this.objetos[index].ID){
+          this.formInventario.controls['objeto'].setValue(this.objetos[index].Nombre);
+          this.formInventario.controls['descripcion'].setValue(this.objetos[index].Descripcion);
+          this.formInventario.controls['cantidad'].setValue(this.objetos[index].CantidadActual);
+          break;
+        }
+      }
+    }
+    else{
+      this.formInventario.controls['objeto'].setValue('');
+      this.formInventario.controls['descripcion'].setValue('');
+      this.formInventario.controls['cantidad'].setValue('');
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import axios, { Axios } from 'axios';
 import { HeaderComponent } from './../components/header/header.component';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -19,26 +20,60 @@ export class InventarioService {
         return this.http.get<any>(this.APIUrl + 'lista');
     }
 
-    altaInventario(nombre: string, descripcion: string, cantidad: number, fechaAdqui: Date) {
+    async altaInventario(nombre: string, descripcion: string, cantidad: number): Promise<any> {
 
-        const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-
-        const body = {'Nombre': nombre, 'Descripcion': descripcion, 'CantidadActual': cantidad, 'FechaAdquision': fechaAdqui.toString()};
-
-        return this.http.post(this.APIUrl + 'nuevo', body,{ headers });
+        await axios.post(this.APIUrl + 'nuevo', {
+            Nombre: nombre,
+            Descripcion: descripcion,
+            CantidadActual: cantidad
+        })
+            .then((respuesta) => {
+                console.log(respuesta.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
-    bajaInventario(id: number):Observable<any[]> {
+    async bajaInventario(id: number): Promise<any> {
 
-        const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+        await axios.delete(this.APIUrl + 'eliminar', {
+            data: { invID: id }
+        })
+            .then((respuesta) => {
+                console.log(respuesta.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
-        const body = {"invID":id};
+    async editInventario(id:number, nombre: string, descripcion: string, cantidad: number): Promise<any> {
 
-        var config = {
-            headers:  headers,
-            body:body,
-        };
+        await axios.put(this.APIUrl + 'actualizar', {
+            invID: id,
+            nuevoNombre: nombre,
+            nuevaDescripcion: descripcion,
+            CantidadActual: cantidad
+        })
+            .then((respuesta) => {
+                console.log(respuesta.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
-        return this.http.delete<any>(this.APIUrl + 'eliminar', config);
+    async editCantidad(cantidad: number): Promise<any> {
+
+        await axios.post(this.APIUrl + 'salida', {
+            cantidadVendida: cantidad
+        })
+            .then((respuesta) => {
+                console.log(respuesta.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 }

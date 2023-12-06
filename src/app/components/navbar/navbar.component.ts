@@ -29,4 +29,8 @@ export class NavbarComponent {
   clickInventario(){
     this.router.navigate(['/inventario']);
   }
+
+  clickProductos(){
+    this.router.navigate(['/productos']);
+  }
 }

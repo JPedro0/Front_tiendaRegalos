@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { LoginComponent } from './components/login/login.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RegistroComponent } from './components/old/registro/registro.component';
@@ -20,13 +19,14 @@ import { MenuPromocionesComponent } from './components/menu-promociones/menu-pro
 import { RegistroComprasComponent } from './components/registro-compras/registro-compras.component';
 import { MenuComprasComponent } from './components/menu-compras/menu-compras.component';
 import { InventarioService } from './service/inventario.service';
+import { Axios } from 'axios';
+import { MenuProductosComponent } from './components/menu-productos/menu-productos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     NavbarComponent,
-    LoginComponent,
     InicioComponent,
     FooterComponent,
     RegistroComponent,
@@ -37,7 +37,8 @@ import { InventarioService } from './service/inventario.service';
     MenuInventarioComponent,
     MenuPromocionesComponent,
     RegistroComprasComponent,
-    MenuComprasComponent
+    MenuComprasComponent,
+    MenuProductosComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +46,7 @@ import { InventarioService } from './service/inventario.service';
     NoopAnimationsModule,
     SharedModule,
   ],
-  providers: [InventarioService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
