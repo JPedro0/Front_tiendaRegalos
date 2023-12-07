@@ -7,23 +7,23 @@
     </mat-form-field>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id de Venta </th>
             <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
         </ng-container>
         <ng-container matColumnDef="total">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de Descuento </th>
-            <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+            <td mat-cell *matCellDef="let element"> ${{element.Total}} </td>
         </ng-container>
         <ng-container matColumnDef="fechaVenta">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descuento </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Venta </th>
             <td mat-cell *matCellDef="let element"> {{element.FechaVenta | date:'dd / MMMM / yyyy'}} </td>
         </ng-container>
         <ng-container matColumnDef="productos">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo del Producto </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> IDs de productos vendidos </th>
             <td mat-cell *matCellDef="let element"> {{element.ProductosVendidos}} </td>
         </ng-container>
         <ng-container matColumnDef="promociones">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo del Producto </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> IDs de promociones aplicadas </th>
             <td mat-cell *matCellDef="let element"> {{element.PromocionesAplicadas}} </td>
         </ng-container>
 
