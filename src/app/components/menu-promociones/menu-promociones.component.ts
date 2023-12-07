@@ -21,8 +21,10 @@ let Lista_Promocion: Promocion[] = []
 export class MenuPromocionesComponent {
   objetos: Promocion[] = [];
   Lista_Producto: Producto[] = [];
+  Lista_Inventario: Inventario[] = [];
+  Lista_Inventario2: any[] = [];
   seleccion: number = 0;
-  seleccion2: number = 0;
+  seleccion2: number = -1;
   seleccion3: number = -1;
 
   formPromocion: FormGroup;
@@ -44,6 +46,7 @@ export class MenuPromocionesComponent {
     private _snackBar: MatSnackBar,
     private service: PromocionesService,
     private proService: ProductoService,
+    private invService: InventarioService,
     private formBuilder: FormBuilder) {
 
     this.formPromocion = this.formBuilder.group({
@@ -57,7 +60,6 @@ export class MenuPromocionesComponent {
 
   ngOnInit(): void {
     this.refrescar();
-    this.obtenerProductos();
   }
 
   applyFilter(event: Event) {
@@ -67,6 +69,11 @@ export class MenuPromocionesComponent {
 
   async obtenerProductos(){
     this.Lista_Producto = await this.proService.listaProductos();
+    this.Lista_Inventario = await this.invService.listaProductos();
+
+    this.Lista_Inventario2 = this.Lista_Producto.map(item => {
+      return this.Lista_Inventario.find(x => x.ID === item.InventarioID)
+    })
   }
 
   //Refrescar informacion tabla y paginacion
@@ -80,6 +87,8 @@ export class MenuPromocionesComponent {
     catch (e) {
       console.log(e);
     }
+
+    this.obtenerProductos();
   }
 
   async eliminar(id: number) {
@@ -110,8 +119,17 @@ export class MenuPromocionesComponent {
       ProductoCodigo: this.formPromocion.value.productoCodigo
     }
 
+    console.log(promo)
+
     if(promo.ID == 9999){
       try {
+        for (let index = 0; index < this.Lista_Producto.length; index++) {
+          if(this.Lista_Producto[index].InventarioID == promo.ProductoCodigo){
+            promo.ProductoCodigo = this.Lista_Producto[index].Codigo;
+            break;
+          }
+        }
+
         let respuesta = await this.service.altaProducto(
           promo.TipoDescuento,
           promo.Descuento,
@@ -134,6 +152,20 @@ export class MenuPromocionesComponent {
       }
     }
     else{
+      for (let index = 0; index < this.Lista_Producto.length; index++) {
+        if(this.Lista_Producto[index].InventarioID == promo.ID){
+          promo.ID = this.Lista_Producto[index].Codigo;
+          promo.ProductoCodigo = this.Lista_Producto[index].Codigo;
+          break;
+        }
+      }
+      for (let index = 0; index < Lista_Promocion.length; index++) {
+        if(Lista_Promocion[index].ProductoCodigo == promo.ID){
+          promo.ID = Lista_Promocion[index].ID;
+          break;
+        }
+      }
+
       try {
         let respuesta = await this.service.editPromocion(
           promo.ID,
@@ -159,13 +191,27 @@ export class MenuPromocionesComponent {
   }
 
   setName(){
-    //console.log(this.objetos[1])
-    if(this.formPromocion.value.id > 0 && this.formPromocion.value.id != 9999){
+    let variable = 0;
+    let producto = 0;
+    for (let index = 0; index < this.Lista_Producto.length; index++) {
+      if(this.Lista_Producto[index].InventarioID == this.formPromocion.value.id){
+        variable = this.Lista_Producto[index].Codigo;
+        break;
+      }
+    }
+    for (let index = 0; index < Lista_Promocion.length; index++) {
+      if(Lista_Promocion[index].ProductoCodigo == variable){
+        variable = Lista_Promocion[index].ID;
+        producto = Lista_Promocion[index].ID;
+        break;
+      }
+    }
+    if(variable > 0 && variable != 9999){
       for (let index = 0; index < this.objetos.length; index++) {    
         if(this.formPromocion.value.id == this.objetos[index].ID){
           this.formPromocion.controls['tipoDescuento'].setValue(this.objetos[index].TipoDescuento);
           this.formPromocion.controls['descuento'].setValue(this.objetos[index].Descuento);
-          this.formPromocion.controls['productoCodigo'].setValue(this.objetos[index].ProductoCodigo);
+          this.formPromocion.controls['productoCodigo'].setValue(producto);
           break;
         }
       }
@@ -173,7 +219,7 @@ export class MenuPromocionesComponent {
     else{
       this.formPromocion.controls['tipoDescuento'].setValue(-1);
       this.formPromocion.controls['descuento'].setValue('');
-      this.formPromocion.controls['productoCodigo'].setValue(0);
+      this.formPromocion.controls['productoCodigo'].setValue(-1);
     }
   }
 }

@@ -1,11 +1,11 @@
 <app-navbar />
 <h2>Registrar Compra</h2>
-<form class="mb-3 module" [formGroup]="formVenta">
+<form class="mb-3 module miniCentro ancho" [formGroup]="formVenta">
     <label for="FormControlInput" class="form-label texto">Producto:</label>
     <div class="input-group mb-3">
-        <select formControlName="productoCodigo" [(ngModel)]="seleccion2" class="form-select">
+        <select formControlName="invCodigo" [(ngModel)]="seleccion" class="form-select">
             <option disabled value="0">Seleccione un producto</option>
-            <option *ngFor="let item of Lista_Inventario" [ngValue]="item.ID">
+            <option *ngFor="let item of Lista_Objetos" [ngValue]="item.ID">
                 {{ item.Nombre }}
             </option>
         </select>
@@ -15,8 +15,26 @@
     <button type="submit" (click)="agregar()" [disabled]="formVenta.invalid">Agregar</button> 
 </form>
 <div>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="Codigo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+            <td mat-cell *matCellDef="let element"> {{element.Codigo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Precio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+            <td mat-cell *matCellDef="let element"> {{element.Precio}} </td>
+        </ng-container>
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon class="material-icons iconos" matTooltip="Eliminar" (click)="eliminarProducto(element.Codigo)">delete</mat-icon>
+            </td>
+        </ng-container>
 
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </div>
-<p>Total: $total</p>
-<button type="submit" (click)="realizarVenta()">Finalizar Venta</button>
+
+<button type="submit" (click)="realizarVenta()"*ngIf="finalizar">Finalizar Venta</button>
 <app-bottombar></app-bottombar>

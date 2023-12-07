@@ -61,8 +61,8 @@ export class InventarioService {
     }
 
     async genCargo(id:number, cantidad: number): Promise<any> {
-        await axios.post(this.APIUrl + 'cargo', {
-            invID: id,
+        await axios.put(this.APIUrl + 'cargo', {
+            ID: id,
             cantidadVendida: cantidad
         })
             .then((respuesta) => {
@@ -74,8 +74,8 @@ export class InventarioService {
     }
 
     async genAbono(id:number, cantidad: number): Promise<any> {
-        await axios.post(this.APIUrl + 'abono', {
-            invID: id,
+        await axios.put(this.APIUrl + 'abono', {
+            ID: id,
             cantidadComprada: cantidad
         })
             .then((respuesta) => {

@@ -11,7 +11,7 @@
             <td mat-cell *matCellDef="let element"> {{element.Codigo}} </td>
         </ng-container>
         <ng-container matColumnDef="precio">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio $ (MXN) </th>
             <td mat-cell *matCellDef="let element"> {{element.Precio}} </td>
         </ng-container>
         <ng-container matColumnDef="inventarioID">
@@ -36,27 +36,28 @@
     <form [formGroup]="formProducto">
         <label for="FormControlInput" class="form-label">Productos:</label>
         <div class="input-group mb-3">
-            <select formControlName="codigo" [(ngModel)]="seleccion" class="form-select" (change)="setName()" [value]='0'>
+            <select formControlName="codigo" [(ngModel)]="seleccion" class="form-select" (change)="setName()">
                 <option disabled value="0">Seleccione una opcion</option>
                 <option value="9999"><b>Dar de alta un producto</b></option>
-                <option *ngFor="let item of objetos" [ngValue]="item.Codigo">
-                    {{ item.Codigo }}
+                <option *ngFor="let item of Lista_Objetos2" [ngValue]="item.ID">
+                    {{ item.Nombre }}
                 </option>
             </select>
             &nbsp;
         </div>
-        <label for="FormControlInput" class="form-label texto">Precio del objeto:</label>
-        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" placeholder="" formControlName="precio">
         <label for="FormControlInput" class="form-label texto">ID del producto en Inventario:</label>
         <div class="input-group mb-3">
-            <select formControlName="inventarioID" [(ngModel)]="seleccion2" class="form-select" [value]='0'>
+            <select formControlName="inventarioID" [(ngModel)]="seleccion2" class="form-select">
                 <option disabled value="0">Seleccione un objeto</option>
                 <option *ngFor="let item of Lista_Objetos" [ngValue]="item.ID">
                     {{ item.Nombre }}
                 </option>
             </select>
             &nbsp;
-        </div>        
+        </div>
+        <label for="FormControlInput" class="form-label texto">Precio del objeto (MXN):</label>
+        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" placeholder="" formControlName="precio">
+
         <br />
         <button type="submit" (click)="altaInventario()" [disabled]="formProducto.invalid">Añadir</button> 
     </form>

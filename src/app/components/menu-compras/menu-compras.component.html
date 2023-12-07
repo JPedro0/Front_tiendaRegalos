@@ -1,6 +1,6 @@
 <app-navbar />
 <h2>Historial de compras.</h2>
-<!--div class="mat-elevation-z0 espacio module">
+<div class="mat-elevation-z0 espacio module">
     <mat-form-field class="mat-form-field">
         <mat-label>Filtro</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input autocomplete="off">
@@ -16,7 +16,7 @@
         </ng-container>
         <ng-container matColumnDef="fechaVenta">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Descuento </th>
-            <td mat-cell *matCellDef="let element"> {{element.FechaVenta}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.FechaVenta | date:'dd / MMMM / yyyy'}} </td>
         </ng-container>
         <ng-container matColumnDef="productos">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo del Producto </th>
@@ -35,38 +35,26 @@
 </div>
 <div>
     <h3>Visualizador.</h3>
-    <form [formGroup]="formPromocion">
-        <label for="FormControlInput" class="form-label">Promociones:</label>
+    <form [formGroup]="formVentaData">
+        <label for="FormControlInput" class="form-label">ID's de ventas realizadas:</label>
         <div class="input-group mb-3">
             <select formControlName="id" [(ngModel)]="seleccion" class="form-select" (change)="setName()" [value]='0'>
                 <option disabled value="0">Seleccione una opcion</option>
-                <option value="9999"><b>Dar de alta un producto</b></option>
+                <option value="9999"><b>Sin seleccion</b></option>
                 <option *ngFor="let item of objetos" [ngValue]="item.ID">
                     {{ item.ID }}
                 </option>
             </select>
             &nbsp;
         </div>
-        <label for="FormControlInput" class="form-label texto">Tipo de descuento:</label>
-        <select formControlName="tipoDescuento" class="form-select" [(ngModel)]="seleccion3">
-            <option disabled value="-1">Seleccione un producto</option>
-            <option value="false">Monetario</option>
-            <option value="true">Porcentaje</option>
-        </select>        
-        <label for="FormControlInput" class="form-label texto">Descuento a aplicar:</label>
-        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" placeholder="" formControlName="descuento">
-        <label for="FormControlInput" class="form-label texto">ID del Producto:</label>
-        <div class="input-group mb-3">
-            <select formControlName="productoCodigo" [(ngModel)]="seleccion2" class="form-select">
-                <option disabled value="0">Seleccione un producto</option>
-                <option *ngFor="let item of Lista_Producto" [ngValue]="item.Codigo">
-                    {{ item.Codigo }}
-                </option>
-            </select>
-            &nbsp;
-        </div>        
-        <br />
-        <button type="submit" (click)="altaPromocion()" [disabled]="formPromocion.invalid">Añadir</button> 
+        <label for="FormControlInput" class="form-label texto">Total de la venta:</label>
+        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" formControlName="total" [readOnly]="true">
+        <label for="FormControlInput" class="form-label texto">Fecha de la venta:</label>
+        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" placeholder="" formControlName="fechaVenta" [readOnly]="true">
+        <label for="FormControlInput" class="form-label texto">IDs de productos vendidos:</label>
+        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" formControlName="productos" [readOnly]="true">
+        <label for="FormControlInput" class="form-label texto">IDs dde promociones aplicadas:</label>
+        <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" formControlName="promociones" [readOnly]="true">
     </form>
-</div-->
+</div>
 <app-bottombar></app-bottombar>

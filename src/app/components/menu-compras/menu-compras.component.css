@@ -1,0 +1,18 @@
+input{
+    background-color: #f4ecec;
+}
+
+label{
+    margin-top: 0.5em;
+}
+
+select{
+    background-color: #f4ecec;
+}
+
+h2,h3{
+    flex: auto;
+    text-align: center;
+    align-items: center;
+    padding-top: 2rem;
+}

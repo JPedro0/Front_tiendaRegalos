@@ -19,6 +19,7 @@ let Lista_Productos: Producto[] = []
 export class MenuProductosComponent {
   objetos: Producto[] = [];
   Lista_Objetos: Inventario[] = [];
+  Lista_Objetos2: any[] = [];
   seleccion: number = 0;
   seleccion2: number = 0;
 
@@ -46,7 +47,7 @@ export class MenuProductosComponent {
 
     this.formProducto = this.formBuilder.group({
       codigo: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      precio: ['', [Validators.required]],
+      precio: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(13), Validators.pattern(/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/)]],
       inventarioID: ['', [Validators.required, Validators.pattern('[0-9]*')]],
     });
 
@@ -54,7 +55,6 @@ export class MenuProductosComponent {
 
   ngOnInit(): void {
     this.refrescar();
-    this.obtenerInventario();
   }
 
   applyFilter(event: Event) {
@@ -64,6 +64,10 @@ export class MenuProductosComponent {
 
   async obtenerInventario(){
     this.Lista_Objetos = await this.invService.listaProductos();
+
+    this.Lista_Objetos2 = Lista_Productos.map(item => {
+      return this.Lista_Objetos.find(x => x.ID === item.InventarioID)
+    })
   }
 
   //Refrescar informacion tabla y paginacion
@@ -73,6 +77,21 @@ export class MenuProductosComponent {
       this.dataSource = new MatTableDataSource<Producto>(Lista_Productos);
       this.ngAfterViewInit();
       this.objetos = Lista_Productos;
+
+      this.obtenerInventario();
+      
+      /*let a:any [] = this.Lista_Objetos.filter(obj => {
+        const exists = this.objetos.some(obj2 => (
+          obj2.InventarioID === obj.ID
+        ));
+        
+        if (!exists) {
+          return obj;
+        }
+        else{
+          return '';
+        }
+      });*/
     }
     catch (e) {
       console.log(e);
@@ -92,7 +111,6 @@ export class MenuProductosComponent {
 
       //Refrescar tabla
       this.refrescar();
-
     }
     catch (e) {
       console.log(e);
@@ -130,6 +148,13 @@ export class MenuProductosComponent {
     }
     else{
       try {
+        for (let index = 0; index < Lista_Productos.length; index++) {
+          if(Lista_Productos[index].InventarioID == producto.Codigo){
+            producto.Codigo = Lista_Productos[index].Codigo;
+            break;
+          }
+        }
+
         let respuesta = await this.service.editProducto(
           producto.Codigo,
           producto.Precio
@@ -153,10 +178,9 @@ export class MenuProductosComponent {
   }
 
   setName(){
-    //console.log(this.objetos[1])
     if(this.formProducto.value.codigo > 0 && this.formProducto.value.codigo != 9999){
       for (let index = 0; index < this.objetos.length; index++) {    
-        if(this.formProducto.value.codigo == this.objetos[index].Codigo){
+        if(this.formProducto.value.codigo == this.objetos[index].InventarioID){
           this.formProducto.controls['precio'].setValue(this.objetos[index].Precio);
           this.formProducto.controls['inventarioID'].setValue(this.objetos[index].InventarioID);
           break;

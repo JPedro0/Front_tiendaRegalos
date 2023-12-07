@@ -49,20 +49,20 @@
             </select>
             &nbsp;
         </div>
-        <label for="FormControlInput" class="form-label texto">Estado de la promocion:</label>
+        <label for="FormControlInput" class="form-label texto">Tipo de descuento:</label>
         <select formControlName="tipoDescuento" class="form-select" [(ngModel)]="seleccion3">
-            <option disabled value="-1">Seleccione un estado</option>
-            <option value="false">Inactivo</option>
-            <option value="true">Activo</option>
+            <option disabled value="-1">Seleccione un tipo</option>
+            <option value="false">Monetario</option>
+            <option value="true">Porcentaje</option>
         </select>        
         <label for="FormControlInput" class="form-label texto">Descuento a aplicar:</label>
         <input type="text" class="form-control" id="FormControlInventario" autocomplete="off" placeholder="" formControlName="descuento">
         <label for="FormControlInput" class="form-label texto">ID del Producto:</label>
         <div class="input-group mb-3">
             <select formControlName="productoCodigo" [(ngModel)]="seleccion2" class="form-select">
-                <option disabled value="0">Seleccione un producto</option>
-                <option *ngFor="let item of Lista_Producto" [ngValue]="item.Codigo">
-                    {{ item.Codigo }}
+                <option disabled value="-1">Seleccione un producto</option>
+                <option *ngFor="let item of Lista_Inventario2" [ngValue]="item.ID">
+                    {{ item.Nombre }}
                 </option>
             </select>
             &nbsp;

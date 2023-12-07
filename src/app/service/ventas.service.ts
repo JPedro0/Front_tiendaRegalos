@@ -20,15 +20,19 @@ export class VentasService {
     }
 
     async altaVenta(ventaProductos: string): Promise<any> {
+        let res:any;
         await axios.post(this.APIUrl + 'nuevo', {
             ventaProductos: ventaProductos
         })
             .then((respuesta) => {
-                console.log(respuesta);
+                //console.log(respuesta)
+                res = respuesta;
+                return res;
             })
             .catch((error) => {
                 console.log(error);
             });
+            return res.data;
     }
 
     async bajaVenta(id: number): Promise<any> {

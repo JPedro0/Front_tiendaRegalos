@@ -26,7 +26,7 @@ export class MenuComprasComponent {
   Lista_Producto: Producto[] = [];
   seleccion: number = 0;
 
-  formPromocion: FormGroup;
+  formVentaData: FormGroup;
 
   displayedColumns: string[] = ['id', 'total', 'fechaVenta', 'productos', 'promociones'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
@@ -47,7 +47,7 @@ export class MenuComprasComponent {
     private proService: ProductoService,
     private formBuilder: FormBuilder) {
 
-    this.formPromocion = this.formBuilder.group({
+    this.formVentaData = this.formBuilder.group({
       id: ['', [Validators.required]],
       total: ['', [Validators.required]],
       fechaVenta: ['', [Validators.required]],
@@ -59,7 +59,6 @@ export class MenuComprasComponent {
 
   ngOnInit(): void {
     this.refrescar();
-    this.obtenerProductos();
   }
 
   applyFilter(event: Event) {
@@ -67,15 +66,16 @@ export class MenuComprasComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  async obtenerProductos(){
-    this.Lista_Producto = await this.proService.listaProductos();
-  }
-
   //Refrescar informacion tabla y paginacion
   async refrescar() {
     try {
       Lista_Ventas = await this.service.listaVentas();
-      console.log(Lista_Ventas)
+      
+      for (let index = 0; index < Lista_Ventas.length; index++) {
+        Lista_Ventas[index].ProductosVendidos = Lista_Ventas[index].ProductosVendidos.replace(/\$/g," ");
+        Lista_Ventas[index].PromocionesAplicadas = Lista_Ventas[index].PromocionesAplicadas.replace(/\$/g,' ');
+      }
+
       this.dataSource = new MatTableDataSource<Venta>(Lista_Ventas);
       this.ngAfterViewInit();
       this.objetos = Lista_Ventas;
@@ -85,22 +85,24 @@ export class MenuComprasComponent {
     }
   }
 
-  /*setName(){
+  setName(){
     //console.log(this.objetos[1])
-    if(this.formPromocion.value.id > 0 && this.formPromocion.value.id != 9999){
+    if(this.formVentaData.value.id > 0 && this.formVentaData.value.id != 9999){
       for (let index = 0; index < this.objetos.length; index++) {    
-        if(this.formPromocion.value.id == this.objetos[index].ID){
-          this.formPromocion.controls['tipoDescuento'].setValue(this.objetos[index].TipoDescuento);
-          this.formPromocion.controls['descuento'].setValue(this.objetos[index].Descuento);
-          this.formPromocion.controls['productoCodigo'].setValue(this.objetos[index].ProductoCodigo);
+        if(this.formVentaData.value.id == this.objetos[index].ID){
+          this.formVentaData.controls['total'].setValue("$"+this.objetos[index].Total);
+          this.formVentaData.controls['fechaVenta'].setValue(formatDate(this.objetos[index].FechaVenta, 'dd / MMMM / yyyy', 'es'));
+          this.formVentaData.controls['productos'].setValue(this.objetos[index].ProductosVendidos);
+          this.formVentaData.controls['promociones'].setValue(this.objetos[index].PromocionesAplicadas);
           break;
         }
       }
     }
     else{
-      this.formPromocion.controls['tipoDescuento'].setValue(-1);
-      this.formPromocion.controls['descuento'].setValue('');
-      this.formPromocion.controls['productoCodigo'].setValue(0);
+          this.formVentaData.controls['total'].setValue('');
+          this.formVentaData.controls['fechaVenta'].setValue('');
+          this.formVentaData.controls['productos'].setValue('');
+          this.formVentaData.controls['promociones'].setValue('');
     }
-  }*/
+  }
 }
