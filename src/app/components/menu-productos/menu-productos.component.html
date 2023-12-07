@@ -48,7 +48,7 @@
         <label for="FormControlInput" class="form-label texto">ID del producto en Inventario:</label>
         <div class="input-group mb-3">
             <select formControlName="inventarioID" [(ngModel)]="seleccion2" class="form-select">
-                <option disabled value="0">Seleccione un objeto</option>
+                <option disabled value="-1">Seleccione un objeto</option>
                 <option *ngFor="let item of Lista_Objetos" [ngValue]="item.ID">
                     {{ item.Nombre }}
                 </option>

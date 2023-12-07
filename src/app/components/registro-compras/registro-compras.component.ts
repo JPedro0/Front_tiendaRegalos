@@ -136,7 +136,7 @@ export class RegistroComprasComponent {
     let respuesta:Venta = await this.service.altaVenta(this.carritoCompras)
 
     for (let index = 0; index < this.Lista_Venta.length; index++) {
-      this.invService.genCargo(this.Lista_Venta[index].InventarioID,1);
+      await this.invService.genCargo(this.Lista_Venta[index].InventarioID,1);
     }
     
     this._snackBar.open('El total de compra es de: $' + respuesta.Total, 'Okay', {

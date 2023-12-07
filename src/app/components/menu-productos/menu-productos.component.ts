@@ -21,7 +21,7 @@ export class MenuProductosComponent {
   Lista_Objetos: Inventario[] = [];
   Lista_Objetos2: any[] = [];
   seleccion: number = 0;
-  seleccion2: number = 0;
+  seleccion2: number = -1;
 
   formProducto: FormGroup;
 
@@ -80,18 +80,6 @@ export class MenuProductosComponent {
 
       this.obtenerInventario();
       
-      /*let a:any [] = this.Lista_Objetos.filter(obj => {
-        const exists = this.objetos.some(obj2 => (
-          obj2.InventarioID === obj.ID
-        ));
-        
-        if (!exists) {
-          return obj;
-        }
-        else{
-          return '';
-        }
-      });*/
     }
     catch (e) {
       console.log(e);
@@ -141,6 +129,7 @@ export class MenuProductosComponent {
 
         this.formProducto.reset();
         this.formProducto.controls['codigo'].setValue(0);
+        this.formProducto.controls['inventarioID'].setValue(-1);
       }
       catch (e) {
         console.log(e);
@@ -170,6 +159,7 @@ export class MenuProductosComponent {
 
         this.formProducto.reset();
         this.formProducto.controls['codigo'].setValue(0);
+        this.formProducto.controls['inventarioID'].setValue(-1);
       }
       catch (e) {
         console.log(e);

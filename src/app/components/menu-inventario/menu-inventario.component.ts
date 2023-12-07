@@ -131,10 +131,8 @@ export class MenuInventarioComponent {
 
   async eliminar(id: number) {
     try {
+
       let respuesta = await this.service.bajaInventario( id )
-
-      console.log(respuesta);
-
       //Notificacion de producto Eliminado
       this._snackBar.open('El producto ' + id + ' a sido eliminado', 'Okay', {
         duration: 3000,

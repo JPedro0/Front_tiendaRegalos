@@ -146,26 +146,13 @@ export class MenuPromocionesComponent {
 
         this.formPromocion.reset();
         this.formPromocion.controls['id'].setValue(0);
+        this.formPromocion.controls['productoCodigo'].setValue(-1);
       }
       catch (e) {
         console.log(e);
       }
     }
     else if(promo.ID > 0){
-      for (let index = 0; index < this.Lista_Producto.length; index++) {
-        if(this.Lista_Producto[index].InventarioID == promo.ID){
-          promo.ID = this.Lista_Producto[index].Codigo;
-          promo.ProductoCodigo = this.Lista_Producto[index].Codigo;
-          break;
-        }
-      }
-      for (let index = 0; index < Lista_Promocion.length; index++) {
-        if(Lista_Promocion[index].ProductoCodigo == promo.ID){
-          promo.ID = Lista_Promocion[index].ID;
-          break;
-        }
-      }
-
       try {
         let respuesta = await this.service.editPromocion(
           promo.ID,
@@ -183,6 +170,7 @@ export class MenuPromocionesComponent {
 
         this.formPromocion.reset();
         this.formPromocion.controls['id'].setValue(0);
+        this.formPromocion.controls['productoCodigo'].setValue(-1);
       }
       catch (e) {
         console.log(e);
@@ -193,16 +181,18 @@ export class MenuPromocionesComponent {
   setName(){
     let variable = 0;
     let producto = 0;
-    for (let index = 0; index < this.Lista_Producto.length; index++) {
-      if(this.Lista_Producto[index].InventarioID == this.formPromocion.value.id){
-        variable = this.Lista_Producto[index].Codigo;
+
+    for (let index = 0; index < Lista_Promocion.length; index++) {
+      if(Lista_Promocion[index].ID == this.formPromocion.value.id){
+        variable = Lista_Promocion[index].ProductoCodigo;
         break;
       }
     }
-    for (let index = 0; index < Lista_Promocion.length; index++) {
-      if(Lista_Promocion[index].ProductoCodigo == variable){
-        variable = Lista_Promocion[index].ID;
-        producto = Lista_Promocion[index].ID;
+
+    for (let index = 0; index < this.Lista_Producto.length; index++) {
+      if(this.Lista_Producto[index].Codigo == variable){
+        variable = this.Lista_Producto[index].Codigo;
+        producto = this.Lista_Producto[index].Codigo;
         break;
       }
     }

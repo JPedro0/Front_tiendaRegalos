@@ -35,7 +35,7 @@ export class InventarioService {
 
     async bajaInventario(id: number): Promise<any> {
         await axios.delete(this.APIUrl + 'eliminar', {
-            data: { invID: id }
+            data: { ID: id }
         })
             .then((respuesta) => {
                 console.log(respuesta);
