@@ -1,3 +1,3 @@
 export var Global = {
-    urlBackend: "http://localhost:3000/"
+    urlBackend: "https://apitiendaregalosith.onrender.com/"
 };

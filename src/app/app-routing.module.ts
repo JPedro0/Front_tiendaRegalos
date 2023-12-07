@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './components/inicio/inicio.component';
-import { RegistroComponent } from './components/old/registro/registro.component';
-import { RegistrosOficiosComponent } from './components/old/registros-oficios/registros-oficios.component';
-import { GenRespuestaComponent } from './components/old/gen-respuesta/gen-respuesta.component';
-import { InfoPersonalComponent } from './components/old/info-personal/info-personal.component';
 import { MenuPromocionesComponent } from './components/menu-promociones/menu-promociones.component';
 import { MenuInventarioComponent } from './components/menu-inventario/menu-inventario.component';
 import { MenuComprasComponent } from './components/menu-compras/menu-compras.component';

@@ -47,7 +47,7 @@ export class InventarioService {
 
     async editInventario(id:number, nombre: string, descripcion: string, cantidad: number): Promise<any> {
         await axios.put(this.APIUrl + 'actualizar', {
-            invID: id,
+            ID: id,
             nuevoNombre: nombre,
             nuevaDescripcion: descripcion,
             nuevaCantidadActual: cantidad

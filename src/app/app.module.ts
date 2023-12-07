@@ -8,12 +8,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { RegistroComponent } from './components/old/registro/registro.component';
-import { RegistrosOficiosComponent } from './components/old/registros-oficios/registros-oficios.component';
 import { BottombarComponent } from './components/bottombar/bottombar.component';
 import { SharedModule } from './components/shared/shared.module';
-import { GenRespuestaComponent } from './components/old/gen-respuesta/gen-respuesta.component';
-import { InfoPersonalComponent } from './components/old/info-personal/info-personal.component';
 import { MenuInventarioComponent } from './components/menu-inventario/menu-inventario.component';
 import { MenuPromocionesComponent } from './components/menu-promociones/menu-promociones.component';
 import { RegistroComprasComponent } from './components/registro-compras/registro-compras.component';
@@ -30,11 +26,7 @@ registerLocaleData(localeES, "es");
     NavbarComponent,
     InicioComponent,
     FooterComponent,
-    RegistroComponent,
-    RegistrosOficiosComponent,
     BottombarComponent,
-    GenRespuestaComponent,
-    InfoPersonalComponent,
     MenuInventarioComponent,
     MenuPromocionesComponent,
     RegistroComprasComponent,
