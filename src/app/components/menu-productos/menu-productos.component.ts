@@ -146,7 +146,7 @@ export class MenuProductosComponent {
         console.log(e);
       }
     }
-    else{
+    else if(producto.Codigo > 0){
       try {
         for (let index = 0; index < Lista_Productos.length; index++) {
           if(Lista_Productos[index].InventarioID == producto.Codigo){

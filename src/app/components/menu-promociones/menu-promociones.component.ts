@@ -151,7 +151,7 @@ export class MenuPromocionesComponent {
         console.log(e);
       }
     }
-    else{
+    else if(promo.ID > 0){
       for (let index = 0; index < this.Lista_Producto.length; index++) {
         if(this.Lista_Producto[index].InventarioID == promo.ID){
           promo.ID = this.Lista_Producto[index].Codigo;

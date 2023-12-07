@@ -104,7 +104,7 @@ export class MenuInventarioComponent {
         console.log(e);
       }
     }
-    else{
+    else if(producto.ID > 0){
       try {
         let respuesta = await this.service.editInventario(
           producto.ID,
